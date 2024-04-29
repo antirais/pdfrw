@@ -52,7 +52,7 @@ signs ("<" and ">").
 A literal string may encode bytes almost unmolested.  The caveat is
 that if a byte has the same value as a parenthesis, it must be escaped
 so that the tokenizer knows the string is not finished.  This is accomplished
-by using the ASCII backslash ("\") as an escape character.  Of course,
+by using the ASCII backslash ("\\") as an escape character.  Of course,
 now any backslash appearing in the data must likewise be escaped.
 
 Hexadecimal strings
@@ -117,7 +117,7 @@ The second method that can be used to improve readability (and reduce space)
 in literal strings is to not escape parentheses.  This only works, and is
 only allowed, when the parentheses are properly balanced.  For example,
 "((Hello))" is a valid encoding for a literal string, but "((Hello)" is not;
-the latter case should be encoded "(\(Hello)"
+the latter case should be encoded "(\\(Hello)"
 
 Encoding text into strings
 ==========================
@@ -372,12 +372,12 @@ class PdfString(str):
             Possible string escapes from the spec:
             (PDF 1.7 Reference, section 3.2.3, page 53)
 
-                1. \[nrtbf\()]: simple escapes
+                1. \\[nrtbf\\()]: simple escapes
                 2. \\d{1,3}: octal. Must be zero-padded to 3 digits
                     if followed by digit
-                3. \<end of line>: line continuation. We don't know the EOL
+                3. \\<end of line>: line continuation. We don't know the EOL
                     marker used in the PDF, so accept \r, \n, and \r\n.
-                4. Any other character following \ escape -- the backslash
+                4. Any other character following \\ escape -- the backslash
                     is swallowed.
         """
         result = (self.unescape_func or self.init_unescapes())(self[1:-1])
